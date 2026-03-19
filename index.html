@@ -7,9 +7,26 @@
 		<title>Library App</title>
 	</head>
 	<body>
-		<p>
-			This is a library app. Right now I am prioritizing the logic so check the
-			console to see how the program's logic works.
-		</p>
+		<header class="header">
+            <h1 id="page-heading">Library</h1>
+            <button id="add-button">+</button>
+        </header>
+        <main class="book-list">
+            <div class="book">
+                <div class="image-section">
+                    <img src="" alt="book placeholder imagae">
+                </div>
+                <div class="text-section">
+                     <p class="title">No Longer Human</p>
+                     <p class="author">Osamu Dazai</p>
+                     <p class="status">Not Read</p>
+                </div>
+                <div class="button-section">
+                   <button class="toggle-button">Change Status</button>
+                   <button class="edit-button">Update Info</button>
+                   <button class="delete-button">Remove Book</button>
+                </div>
+            </div>
+        </main>
 	</body>
 </html>
