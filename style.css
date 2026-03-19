@@ -20,7 +20,7 @@ button {
     justify-content: space-between;
     align-items: center;
     padding: 2rem 1rem;
-    border-bottom: 5px solid var(--color-grey);
+    border-bottom: 8px solid var(--color-grey);
 }
 
 #add-button {
@@ -51,4 +51,58 @@ button {
 #add-button:active {
     background-color: var(--color-grey);
     transform: scale(0.95);
+}
+
+.book-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(auto, 1fr));
+    gap: 1rem;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.book {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    border: 5px solid var(--color-grey);
+    border-radius: 12px;
+    height: 200px;
+}
+
+.info-section {
+    display: grid;
+    grid-template-rows: auto;
+    align-items: center;
+    font-size: 1.5em;
+    padding: 0.5em;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.button-section {
+    display: grid;
+    grid-template-rows: auto;
+    padding: 0  6px;
+    border-left: 3px solid var(--color-grey);
+}
+
+.button-section > button {
+    width: max-content;
+    font-size: 1.8em;
+    cursor: pointer;
+    transition: color 0.1s;
+}
+
+.toggle-button:hover {
+    color: rgb(199, 199, 37);
+}
+
+.edit-button:hover {
+    color: blue;
+}
+
+.delete-button:hover {
+    color: crimson;
 }
