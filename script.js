@@ -36,20 +36,85 @@ const getBookData = function (event) {
    let author = inputs[1].value;
    let pages = inputs[2].value;
    let isRead = inputs[3].checked ? true : false;
-   let newBook = addToLibrary(title, author, pages, isRead);
+   addToLibrary(title, author, pages, isRead);
    addBookForm.reset();
-   console.log(newBook);
+   showBooks();
+}
+
+const showBooks = function () {
+    if (library.length === 0) {
+        return;
+    }
+    library.forEach((book) => {
+        let titleValue = book.title;
+        let authorValue = book.author;
+        let pagesValue = book.pages;
+        let isReadValue = book.isRead;
+        let id = book.id;
+
+        const title = document.createElement('p');
+        title.classList.add('title');
+        title.textContent = titleValue;
+        const author = document.createElement('p');
+        author.classList.add('author');
+        author.textContent = authorValue;
+        const pages = document.createElement('p');
+        pages.classList.add('pages');
+        pages.textContent = pagesValue;
+        const status = document.createElement('p');
+        status.classList.add('status');
+        status.textContent = isReadValue ? 'Read' : 'Not read';
+
+        const infoSection = document.createElement('div');
+        infoSection.classList.add('info-section');
+        infoSection.appendChild(title);
+        infoSection.appendChild(author);
+        infoSection.appendChild(pages);
+        infoSection.appendChild(status);
+        book = document.createElement('div');
+        book.classList.add('book');
+        book.setAttribute('data-book-id', id);
+        book.appendChild(infoSection);
+        
+        const toggleIcon = document.createElement('span');
+        toggleIcon.classList.add('fa-regular', 'fa-circle-check');
+        const toggleButton = document.createElement('button');
+        toggleButton.classList.add('toggle-button');
+        toggleButton.appendChild(toggleIcon);
+        const editIcon = document.createElement('span');
+        editIcon.classList.add('fa-regular', 'fa-pen-to-square');
+        const editButton = document.createElement('button');
+        editButton.classList.add('edit-button');
+        editButton.appendChild(editIcon);
+        const deleteIcon = document.createElement('span');
+        deleteIcon.classList.add('fa-regular', 'fa-trash-can');
+        const deleteButton = document.createElement('button');
+        deleteButton.classList.add('delete-button');
+        deleteButton.appendChild(deleteIcon);
+
+        const buttonSection = document.createElement('div');
+        buttonSection.classList.add('button-section');
+        buttonSection.appendChild(toggleButton);
+        buttonSection.appendChild(editButton);
+        buttonSection.appendChild(deleteButton);
+        book.appendChild(buttonSection);
+
+        booksList.appendChild(book);
+    })
 }
 
 
 const library = [];
 
-let book = new Books('No Longer Human', 'Osamu Dazai', '177', false);
+//addToLibrary('No Longer Human', 'Osamu Dazai', '177', false);
 
 const addBookButton = document.querySelector('#add-button');
 const addBookModal = document.querySelector('#add-book-modal');
 const addBookForm = document.querySelector('#add-book-form');
 const closeModalButton = document.querySelector('#modal-button');
+const booksList = document.querySelector('.book-list');
 
 addBookButton.addEventListener('click', () => addBookModal.showModal());
 addBookForm.addEventListener('submit', getBookData)
+
+showBooks();
