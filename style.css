@@ -73,6 +73,22 @@ input:not([type="checkbox"]) {
     padding: 1rem;
 }
 
+.instruction-div {
+    width: 50vw;
+    padding: 1rem;
+    font-size: 2rem;
+    margin-top: 100px;
+    display: none;
+}
+
+.instruction-div > p {
+    text-decoration: underline;
+}
+
+.show {
+    display: block;
+}
+
 .book {
     display: grid;
     grid-template-columns: 1fr auto;

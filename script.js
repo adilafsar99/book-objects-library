@@ -17,90 +17,93 @@ Books.prototype.updateProperty = function (property, value) {
 }
 
 const addToLibrary = function (title, author, pages, isRead) {
-     let newBook = new Books(title, author, pages, isRead);
-     newBook.id = crypto.randomUUID();
-     library.push(newBook);
-     return newBook;
+    let newBook = new Books(title, author, pages, isRead);
+    newBook.id = crypto.randomUUID();
+    library.push(newBook);
+    return newBook;
 }
 
 const removeFromLibrary = function (id) {
-   library = library.filter(book => book.id !== id);
+    library = library.filter(book => book.id !== id);
 }
 
 const getBookData = function (event) {
-   event.preventDefault();
-   addBookModal.close();
-   const inputNodes = document.querySelectorAll('.form-input');
-   const inputs = Array.from(inputNodes);
-   let title = inputs[0].value;
-   let author = inputs[1].value;
-   let pages = inputs[2].value;
-   let isRead = inputs[3].checked ? true : false;
-   addToLibrary(title, author, pages, isRead);
-   addBookForm.reset();
-   showBooks();
+    event.preventDefault();
+    addBookModal.close();
+    const inputNodes = document.querySelectorAll('.form-input');
+    const inputs = Array.from(inputNodes);
+    let title = inputs[0].value;
+    let author = inputs[1].value;
+    let pages = inputs[2].value;
+    let isRead = inputs[3].checked ? true : false;
+    addToLibrary(title, author, pages, isRead);
+    addBookForm.reset();
+    showBooks();
 }
 
 const showBooks = function () {
     if (library.length === 0) {
-        return;
+        instruction.classList.add('show');
     }
-    library.forEach((book) => {
-        let titleValue = book.title;
-        let authorValue = book.author;
-        let pagesValue = book.pages;
-        let isReadValue = book.isRead;
-        let id = book.id;
+    else {
+        instruction.classList.remove('show');
+        library.forEach((book) => {
+            let titleValue = book.title;
+            let authorValue = book.author;
+            let pagesValue = book.pages;
+            let isReadValue = book.isRead;
+            let id = book.id;
 
-        const title = document.createElement('p');
-        title.classList.add('title');
-        title.textContent = titleValue;
-        const author = document.createElement('p');
-        author.classList.add('author');
-        author.textContent = authorValue;
-        const pages = document.createElement('p');
-        pages.classList.add('pages');
-        pages.textContent = pagesValue;
-        const status = document.createElement('p');
-        status.classList.add('status');
-        status.textContent = isReadValue ? 'Read' : 'Not read';
+            const title = document.createElement('p');
+            title.classList.add('title');
+            title.textContent = titleValue;
+            const author = document.createElement('p');
+            author.classList.add('author');
+            author.textContent = authorValue;
+            const pages = document.createElement('p');
+            pages.classList.add('pages');
+            pages.textContent = pagesValue;
+            const status = document.createElement('p');
+            status.classList.add('status');
+            status.textContent = isReadValue ? 'Read' : 'Not read';
 
-        const infoSection = document.createElement('div');
-        infoSection.classList.add('info-section');
-        infoSection.appendChild(title);
-        infoSection.appendChild(author);
-        infoSection.appendChild(pages);
-        infoSection.appendChild(status);
-        book = document.createElement('div');
-        book.classList.add('book');
-        book.setAttribute('data-book-id', id);
-        book.appendChild(infoSection);
-        
-        const toggleIcon = document.createElement('span');
-        toggleIcon.classList.add('fa-regular', 'fa-circle-check');
-        const toggleButton = document.createElement('button');
-        toggleButton.classList.add('toggle-button');
-        toggleButton.appendChild(toggleIcon);
-        const editIcon = document.createElement('span');
-        editIcon.classList.add('fa-regular', 'fa-pen-to-square');
-        const editButton = document.createElement('button');
-        editButton.classList.add('edit-button');
-        editButton.appendChild(editIcon);
-        const deleteIcon = document.createElement('span');
-        deleteIcon.classList.add('fa-regular', 'fa-trash-can');
-        const deleteButton = document.createElement('button');
-        deleteButton.classList.add('delete-button');
-        deleteButton.appendChild(deleteIcon);
+            const infoSection = document.createElement('div');
+            infoSection.classList.add('info-section');
+            infoSection.appendChild(title);
+            infoSection.appendChild(author);
+            infoSection.appendChild(pages);
+            infoSection.appendChild(status);
+            book = document.createElement('div');
+            book.classList.add('book');
+            book.setAttribute('data-book-id', id);
+            book.appendChild(infoSection);
 
-        const buttonSection = document.createElement('div');
-        buttonSection.classList.add('button-section');
-        buttonSection.appendChild(toggleButton);
-        buttonSection.appendChild(editButton);
-        buttonSection.appendChild(deleteButton);
-        book.appendChild(buttonSection);
+            const toggleIcon = document.createElement('span');
+            toggleIcon.classList.add('fa-regular', 'fa-circle-check');
+            const toggleButton = document.createElement('button');
+            toggleButton.classList.add('toggle-button');
+            toggleButton.appendChild(toggleIcon);
+            const editIcon = document.createElement('span');
+            editIcon.classList.add('fa-regular', 'fa-pen-to-square');
+            const editButton = document.createElement('button');
+            editButton.classList.add('edit-button');
+            editButton.appendChild(editIcon);
+            const deleteIcon = document.createElement('span');
+            deleteIcon.classList.add('fa-regular', 'fa-trash-can');
+            const deleteButton = document.createElement('button');
+            deleteButton.classList.add('delete-button');
+            deleteButton.appendChild(deleteIcon);
 
-        booksList.appendChild(book);
-    })
+            const buttonSection = document.createElement('div');
+            buttonSection.classList.add('button-section');
+            buttonSection.appendChild(toggleButton);
+            buttonSection.appendChild(editButton);
+            buttonSection.appendChild(deleteButton);
+            book.appendChild(buttonSection);
+
+            booksList.appendChild(book);
+        })
+    }
 }
 
 
@@ -113,6 +116,7 @@ const addBookModal = document.querySelector('#add-book-modal');
 const addBookForm = document.querySelector('#add-book-form');
 const closeModalButton = document.querySelector('#modal-button');
 const booksList = document.querySelector('.book-list');
+const instruction = document.querySelector('.instruction-div');
 
 addBookButton.addEventListener('click', () => addBookModal.showModal());
 addBookForm.addEventListener('submit', getBookData)
