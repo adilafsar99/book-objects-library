@@ -105,8 +105,6 @@ const showBooks = function () {
                 booksList.appendChild(book);
                 visibleBooks.push(id);
             }
-
-
         })
     }
 }
