@@ -19,7 +19,7 @@ const addToLibrary = function (title, author, pages, isRead) {
     return newBook;
 }
 
-
+// The .closest() method is used to reach the book card div
 const changeStatus = function (event) {
     const button = event.target;
     const bookCard = button.closest('.book');
@@ -51,6 +51,8 @@ const removeFromLibrary = function (event) {
     showBooks()
 }
 
+// This methods fills up the input fields with the data that is currently 
+// inside the requested book object
 const handleFormModal = function (event) {
     const button = event.target;
     const bookCard = button.closest('.book');
@@ -67,6 +69,8 @@ const handleFormModal = function (event) {
     addBookModal.showModal();
 }
 
+// I pass the button that was clicked to the modal because if I call the remove function
+// from the modal then the event target will be the modal button and not the book card button
 const handleConfirmationModal = function (event) {
     const button = event.target;
     const bookCard = button.closest('.book');
@@ -75,6 +79,8 @@ const handleConfirmationModal = function (event) {
     confirmationModal.showModal();
 }
 
+// This function receives the data from the modal and figures out if 
+// the book already exists and to update it or it doesn't and create a new one
 const getBookData = function (event) {
     event.preventDefault();
     addBookModal.close();
@@ -90,13 +96,13 @@ const getBookData = function (event) {
     else {
         addToLibrary(title, author, pages, isRead);
     }
-    addBookForm.reset();
-    addBookForm.setAttribute('data-book-id', '');
+    addBookForm.reset(); // To clear the input fields
+    addBookForm.setAttribute('data-book-id', ''); // To clear the id of the edited book
     showBooks();
 }
 
 const showBooks = function () {
-    booksList.innerHTML = '';
+    booksList.innerHTML = '';  // To avoid duplication of cards
     if (library.length === 0) {
         instruction.classList.add('show');
     }

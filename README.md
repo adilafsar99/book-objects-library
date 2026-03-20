@@ -1,2 +1,2 @@
-# book-objects-library
-A library app that uses JS objects to create, store and retrieve objects.
+This is the best I could come up with without using any API to handle the form or the objects.
+I am looking forward to seeing how developers have streamlined the process of retreiving and updating data.
