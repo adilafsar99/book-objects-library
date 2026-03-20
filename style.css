@@ -132,7 +132,6 @@ input:not([type="checkbox"]) {
     background-color: var(--color-grey);
     border-right: 2px solid #000;
     border-bottom: 2px solid #000;
-    box-shadow:6px 6px 3px 2px var(--color-blue);
 }
 
 .form-row > input {
@@ -192,6 +191,32 @@ input:not([type="checkbox"]) {
 #modal-button:hover {
     transform: scale(1.1);
 }
+
+#add-book-modal:open {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: max-content;
+    height: 100vh;
+    margin: 0 auto;
+    background-color: transparent;
+    border: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #confirm-choice-dialog {
     display: flex;
