@@ -1,5 +1,7 @@
 :root {
    --color-grey: #424424;
+   --color-blue: #54c2b3;
+   --color-red: #db1139;
 }
 
 
@@ -13,6 +15,17 @@ button {
     appearance: none;
     border: none;
     background-color: #fff;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+}
+
+input:not([type="checkbox"]) {
+    width: 100%;
+    background-color: #fff;
+    border: 2px solid var(--color-grey);
+    border-radius: 5px;
+    padding: 8px;
 }
 
 .header {
@@ -28,8 +41,7 @@ button {
     border: 2px solid #000;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
-    font-size: 1em;
-    cursor: pointer;
+    font-size: 1.1em;
     transition: all 0.1s;
 }
 
@@ -105,4 +117,78 @@ button {
 
 .delete-button:hover {
     color: crimson;
+}
+
+
+.add-book-form {
+    display: grid;
+    grid-template-rows: max-content;
+    row-gap: 10px;
+    font-size: 120%;
+    padding: 1em;
+    margin-top: 1em;
+    border-radius: 10px;
+    color: #fff;
+    background-color: var(--color-grey);
+    border-right: 2px solid #000;
+    border-bottom: 2px solid #000;
+    box-shadow:6px 6px 3px 2px var(--color-blue);
+}
+
+.form-row > input {
+    border: 2px solid #000;
+    background-color: var(--color-blue);
+}
+
+#checkbox-label {
+    display: grid;
+    grid-template-columns: 1em auto;
+    align-items: center;
+    cursor: pointer;
+}
+
+#read-status-checkbox {
+    grid-area: 1 / 1;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border: 2px solid #000;
+    background-color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+    display: grid;
+    place-content: center;
+}
+
+#read-status-checkbox::before {
+    content: "";
+    width: 0.7em;
+    height: 0.7em;
+    background-color: #000;
+    transform: scale(0);
+    transition: transform 0.2s ease-in-out;
+}
+
+#read-status-checkbox:checked::before {
+    transform: scale(1);
+}
+
+#modal-button {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #000;
+    border-radius: 12px;
+    color: #fff;
+    background-color: var(--color-red);
+    transition: transform 0.1s ease;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#modal-button:active {
+    transform: scale(0.9);
+}
+
+#modal-button:hover {
+    transform: scale(1.1);
 }
