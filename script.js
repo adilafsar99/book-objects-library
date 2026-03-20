@@ -23,19 +23,36 @@ const addToLibrary = function (title, author, pages, isRead) {
     return newBook;
 }
 
-const removeFromLibrary = function (id) {
-    library = library.filter(book => book.id !== id);
+const getBookId = function (button) {
+    const bookCard = button.closest('.book');
+    const bookId = bookCard.dataset.bookId;
+    return bookId;
 }
 
-const changeStatus = function (e) {
-    const bookCard = e.target.closest('.book');
-    const bookId = bookCard.dataset.bookId;
+const removeFromLibrary = function (event) {
+    confirmationModal.close();
+    const button = event.target;
+    const bookId = button.dataset.bookId;
+    library = library.filter(book => book.id !== bookId); 
+    showBooks()
+}
+
+const changeStatus = function (event) {
+    const button = event.target;
+    const bookId = getBookId(button);
     for (const book of library) {
         if (book.id == bookId) {
             book.changeStatus();
             showBooks();
         }
     }
+}
+
+const handleModal = function (event) {
+    const button = event.target;
+    const bookId = getBookId(button);
+    confirmButton.setAttribute('data-book-id', bookId);
+    confirmationModal.showModal();
 }
 
 const getBookData = function (event) {
@@ -53,12 +70,12 @@ const getBookData = function (event) {
 }
 
 const showBooks = function () {
+    booksList.innerHTML = '';
     if (library.length === 0) {
         instruction.classList.add('show');
     }
     else {
         instruction.classList.remove('show');
-        booksList.innerHTML = '';
         library.forEach((book) => {
             let titleValue = book.title;
             let authorValue = book.author;
@@ -105,6 +122,7 @@ const showBooks = function () {
             deleteIcon.classList.add('fa-regular', 'fa-trash-can');
             const deleteButton = document.createElement('button');
             deleteButton.classList.add('delete-button');
+            deleteButton.addEventListener('click', handleModal);
             deleteButton.appendChild(deleteIcon);
 
             const buttonSection = document.createElement('div');
@@ -121,7 +139,7 @@ const showBooks = function () {
 }
 
 
-const library = [];
+let library = [];
 
 //addToLibrary('No Longer Human', 'Osamu Dazai', '177', false);
 
@@ -131,8 +149,13 @@ const addBookForm = document.querySelector('#add-book-form');
 const closeModalButton = document.querySelector('#modal-button');
 const booksList = document.querySelector('.book-list');
 const instruction = document.querySelector('.instruction-div');
+const confirmationModal = document.querySelector('#confirm-choice-modal');
+const confirmButton = document.querySelector('#confirm-button');
+const cancelButton = document.querySelector('#cancel-button');
 
 addBookButton.addEventListener('click', () => addBookModal.showModal());
-addBookForm.addEventListener('submit', getBookData)
+addBookForm.addEventListener('submit', getBookData);
+confirmButton.addEventListener('click', removeFromLibrary)
+cancelButton.addEventListener('click', () => confirmationModal.close())
 
 showBooks();

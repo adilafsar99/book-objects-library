@@ -20,79 +20,73 @@
 			</div>
 		</header>
 		<main class="main">
-            <div class="book-list">
-
-            </div>
+			<div class="book-list"></div>
 			<div class="instruction-div">
 				<p>Books added to the Library will appear here in the form of cards.</p>
 			</div>
-        </main>
+		</main>
 
-			<!--The modal that takes user input for the book entry-->
-			<dialog id="add-book-modal">
-				<form id="add-book-form">
-					<div class="form-row">
-						<label for="title">Title</label>
-						<input
-							class="form-input"
-							id="title"
-							type="text"
-							name="title"
-							autofocus
-							required
-						/>
-					</div>
-					<div class="form-row">
-						<label for="title">Author</label>
-						<input
-							class="form-input"
-							id="author"
-							type="text"
-							name="author"
-							required
-						/>
-					</div>
-					<div class="form-row">
-						<label for="pages">Pages</label>
-						<input
-							class="form-input"
-							id="pages"
-							type="number"
-							name="pages"
-							min="100"
-							required
-						/>
-					</div>
-					<div class="form-row">
-						<label id="checkbox-label" for="read-status-checkbox"
-							>Have you read the book?
-							<input
-								type="checkbox"
-								name="read-status-checkbox"
-								id="read-status-checkbox"
-								class="form-input"
-							/>
-						</label>
-					</div>
-					<button id="modal-button">Add</button>
-				</form>
-			</dialog>
-
-			<!-- The dialog box that pops ip to confirm user's choice -->
-			<dialog id="confirm-choice-modal">
-				<div id="choice-modal-container">
-					<div class="dialog-message">
-						<p>Are you sure?</p>
-					</div>
-					<div class="dialog-buttons">
-						<button id="confirm-button">
-							<span class="fa-solid fa-check"></span>
-						</button>
-						<button id="cancel-button">
-							<span class="fa-solid fa-x"></span>
-						</button>
-					</div>
+		<!--The modal that takes user input for the book entry-->
+		<dialog id="add-book-modal">
+			<form id="add-book-form">
+				<div class="form-row">
+					<label for="title">Title</label>
+					<input
+						class="form-input"
+						id="title"
+						type="text"
+						name="title"
+						autofocus
+						required
+					/>
 				</div>
-			</dialog>
+				<div class="form-row">
+					<label for="title">Author</label>
+					<input
+						class="form-input"
+						id="author"
+						type="text"
+						name="author"
+						required
+					/>
+				</div>
+				<div class="form-row">
+					<label for="pages">Pages</label>
+					<input
+						class="form-input"
+						id="pages"
+						type="number"
+						name="pages"
+						min="100"
+						required
+					/>
+				</div>
+				<div class="form-row">
+					<label id="checkbox-label" for="read-status-checkbox"
+						>Have you read the book?
+						<input
+							type="checkbox"
+							name="read-status-checkbox"
+							id="read-status-checkbox"
+							class="form-input"
+						/>
+					</label>
+				</div>
+				<button id="modal-button">Add</button>
+			</form>
+		</dialog>
+
+		<!-- The dialog box that pops ip to confirm user's choice -->
+		<dialog id="confirm-choice-modal">
+			<div id="choice-modal-container">
+				<div class="dialog-message">
+					<p>Are you sure?</p>
+				</div>
+				<div class="dialog-buttons">
+					<button class="fa-solid fa-check" id="confirm-button"></button>
+					<button class="fa-solid fa-x" id="cancel-button"></button>
+				</div>
+			</div>
+		</dialog>
 	</body>
 </html>
