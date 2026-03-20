@@ -12,10 +12,6 @@ Books.prototype.changeStatus = function () {
     this.isRead = !this.isRead;
 }
 
-Books.prototype.updateProperty = function (property, value) {
-    this[property] = value;
-}
-
 const addToLibrary = function (title, author, pages, isRead) {
     let newBook = new Books(title, author, pages, isRead);
     newBook.id = crypto.randomUUID();
@@ -23,23 +19,11 @@ const addToLibrary = function (title, author, pages, isRead) {
     return newBook;
 }
 
-const getBookId = function (button) {
-    const bookCard = button.closest('.book');
-    const bookId = bookCard.dataset.bookId;
-    return bookId;
-}
-
-const removeFromLibrary = function (event) {
-    confirmationModal.close();
-    const button = event.target;
-    const bookId = button.dataset.bookId;
-    library = library.filter(book => book.id !== bookId); 
-    showBooks()
-}
 
 const changeStatus = function (event) {
     const button = event.target;
-    const bookId = getBookId(button);
+    const bookCard = button.closest('.book');
+    const bookId = bookCard.dataset.bookId;
     for (const book of library) {
         if (book.id == bookId) {
             book.changeStatus();
@@ -48,9 +32,45 @@ const changeStatus = function (event) {
     }
 }
 
-const handleModal = function (event) {
+const updateBook = function (bookId, title, author, pages, isRead) {
+    for (const book of library) {
+        if (book.id === bookId) {
+           book.title = title;
+           book.author = author;
+           book.pages = pages;
+           book.isRead = isRead;
+        }
+    }
+}
+
+const removeFromLibrary = function (event) {
+    confirmationModal.close();
     const button = event.target;
-    const bookId = getBookId(button);
+    const bookId = button.dataset.bookId;
+    library = library.filter(book => book.id !== bookId);
+    showBooks()
+}
+
+const handleFormModal = function (event) {
+    const button = event.target;
+    const bookCard = button.closest('.book');
+    const bookId = bookCard.dataset.bookId;
+    addBookForm.setAttribute('data-book-id', bookId);
+    for (const book of library) {
+        if (book.id === bookId) {
+            titleInput.value = book.title;
+            authorInput.value = book.author;
+            pagesInput.value = book.pages;
+            isReadInput.checked = book.isRead;
+        }
+    }
+    addBookModal.showModal();
+}
+
+const handleConfirmationModal = function (event) {
+    const button = event.target;
+    const bookCard = button.closest('.book');
+    const bookId = bookCard.dataset.bookId;
     confirmButton.setAttribute('data-book-id', bookId);
     confirmationModal.showModal();
 }
@@ -58,14 +78,20 @@ const handleModal = function (event) {
 const getBookData = function (event) {
     event.preventDefault();
     addBookModal.close();
-    const inputNodes = document.querySelectorAll('.form-input');
-    const inputs = Array.from(inputNodes);
-    let title = inputs[0].value;
-    let author = inputs[1].value;
-    let pages = inputs[2].value;
-    let isRead = inputs[3].checked ? true : false;
-    addToLibrary(title, author, pages, isRead);
+    isReadInput.disbled = false;
+    const bookId = addBookForm.dataset.bookId;
+    let title = titleInput.value;
+    let author = authorInput.value;
+    let pages = pagesInput.value;
+    let isRead = isReadInput.checked ? true : false;
+    if (bookId) {
+        updateBook(bookId, title, author, pages, isRead);
+    }
+    else {
+        addToLibrary(title, author, pages, isRead);
+    }
     addBookForm.reset();
+    addBookForm.setAttribute('data-book-id', '');
     showBooks();
 }
 
@@ -81,7 +107,7 @@ const showBooks = function () {
             let authorValue = book.author;
             let pagesValue = book.pages;
             let isReadValue = book.isRead;
-            let id = book.id;
+            let bookId = book.id;
 
             const title = document.createElement('p');
             title.classList.add('title');
@@ -104,7 +130,7 @@ const showBooks = function () {
             infoSection.appendChild(status);
             book = document.createElement('div');
             book.classList.add('book');
-            book.setAttribute('data-book-id', id);
+            book.setAttribute('data-book-id', bookId);
             book.appendChild(infoSection);
 
             const toggleIcon = document.createElement('span');
@@ -117,12 +143,13 @@ const showBooks = function () {
             editIcon.classList.add('fa-regular', 'fa-pen-to-square');
             const editButton = document.createElement('button');
             editButton.classList.add('edit-button');
+            editButton.addEventListener('click', handleFormModal);
             editButton.appendChild(editIcon);
             const deleteIcon = document.createElement('span');
             deleteIcon.classList.add('fa-regular', 'fa-trash-can');
             const deleteButton = document.createElement('button');
             deleteButton.classList.add('delete-button');
-            deleteButton.addEventListener('click', handleModal);
+            deleteButton.addEventListener('click', handleConfirmationModal);
             deleteButton.appendChild(deleteIcon);
 
             const buttonSection = document.createElement('div');
@@ -152,6 +179,12 @@ const instruction = document.querySelector('.instruction-div');
 const confirmationModal = document.querySelector('#confirm-choice-modal');
 const confirmButton = document.querySelector('#confirm-button');
 const cancelButton = document.querySelector('#cancel-button');
+const inputNodes = document.querySelectorAll('.form-input');
+const inputs = Array.from(inputNodes);
+const titleInput = inputs[0];
+const authorInput = inputs[1];
+const pagesInput = inputs[2];
+const isReadInput = inputs[3];
 
 addBookButton.addEventListener('click', () => addBookModal.showModal());
 addBookForm.addEventListener('submit', getBookData);
