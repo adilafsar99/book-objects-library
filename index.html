@@ -62,16 +62,17 @@
 					<button id="modal-button">Add</button>
 				</form>
 			</dialog>
-
-            <div id="confirm-choice-dialog">
+            
+            <!-- The dialog box that pops ip to confirm user's choice -->
+            <dialog id="confirm-choice-modal">
               <div class="dialog-message">
                   <p>Are you sure?</p>
               </div>
               <div class="dialog-buttons">
-                   <button><span fa-regular fa-check></span></button>
-                   <button><span fa-regular fa-cross></span></button>
+                   <button id="confirm-dialog-button"><span class="fa-solid fa-check"></span></button>
+                   <button id="cancel-dialog-button"><span class="fa-solid fa-x"></span></button>
               </div>
-            </div>
+            </dialog>
 
 		</main>
 	</body>

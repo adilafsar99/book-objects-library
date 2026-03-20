@@ -192,3 +192,48 @@ input:not([type="checkbox"]) {
 #modal-button:hover {
     transform: scale(1.1);
 }
+
+#confirm-choice-dialog {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 5px;
+    text-align: center;
+    background-color: var(--color-grey);
+    box-shadow: 2px 3px 1px 2px var(--color-red);
+    border-radius: 12px;
+    padding: 1rem;
+    padding-bottom: 0.5rem;
+}
+
+.dialog-message {
+    font-size: 2em;
+    font-weight: bold;
+    color: #fff;
+}
+
+.dialog-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.dialog-buttons > button {
+    width: 25px;
+    height: 25px;
+    border-radius: 50px;
+    transition: all 0.1s ease-in-out;
+}
+
+.dialog-buttons > button:hover {
+    background-color: var(--color-grey);
+}
+
+#confirm-dialog-button:hover {
+    color: var(--color-blue);
+}
+
+#cancel-dialog-button:hover {
+    color: var(--color-red);
+}
