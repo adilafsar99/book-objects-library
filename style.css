@@ -120,7 +120,7 @@ input:not([type="checkbox"]) {
 }
 
 
-.add-book-form {
+#add-book-form {
     display: grid;
     grid-template-rows: max-content;
     row-gap: 10px;
