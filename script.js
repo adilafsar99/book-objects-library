@@ -1,19 +1,49 @@
-const Books = function (title, author, pages, isRead) {
-    if (!new.target) {
-        throw Error('The constructor should only be called with the "new" keyword!');
+class Book {
+    constructor(title, author, pages, isRead) {
+       this.title = title;
+       this.author = author;
+       this.pages = pages;
+       this.isRead = isRead;
     }
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.isRead = isRead;
-}
+    
+    get title() {
+        return this._title;
+    }
 
-Books.prototype.changeStatus = function () {
-    this.isRead = !this.isRead;
+    set title(value) {
+        this._title = value;
+    }
+
+    get author() {
+        return this._author;
+    }
+
+    set author(value) {
+        this._author = value;
+    }
+
+    get pages() {
+        return this._pages;
+    }
+
+    set pages(value) {
+        this._pages = value;
+    }
+
+    get isRead() {
+        return this._isRead;
+    }
+
+    set isRead(value) {
+        this._isRead = value;
+    }
+
+    changeStatus = () => this._isRead = !this._isRead; 
+
 }
 
 const addToLibrary = function (title, author, pages, isRead) {
-    let newBook = new Books(title, author, pages, isRead);
+    let newBook = new Book(title, author, pages, isRead);
     newBook.id = crypto.randomUUID();
     library.push(newBook);
     return newBook;
