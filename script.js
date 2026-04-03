@@ -1,11 +1,11 @@
 class Book {
     constructor(title, author, pages, isRead) {
-       this.title = title;
-       this.author = author;
-       this.pages = pages;
-       this.isRead = isRead;
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.isRead = isRead;
     }
-    
+
     get title() {
         return this._title;
     }
@@ -38,7 +38,7 @@ class Book {
         this._isRead = value;
     }
 
-    changeStatus = () => this._isRead = !this._isRead; 
+    changeStatus = () => this._isRead = !this._isRead;
 
 }
 
@@ -46,12 +46,20 @@ class Library {
     bookArray = [];
 
     addBook = (title, author, pages, isRead) => {
-       if (this.bookArray.every(book => book.title !== title)) {
-          let newBook = new Book(title, author, pages, isRead);
-          newBook.id = crypto.randomUUID();
-          this.bookArray.push(newBook);
-          return newBook;
-       }
+        if (this.bookArray.every(book => book.title !== title)) {
+            let newBook = new Book(title, author, pages, isRead);
+            newBook.id = crypto.randomUUID();
+            this.bookArray.push(newBook);
+            return newBook;
+        }
+    }
+
+    updateBook = (bookId, title, author, pages, isRead) => {
+        const targetBook = library.findBook('id', bookId);
+        targetBook.title = title;
+        targetBook.author = author;
+        targetBook.pages = pages;
+        targetBook.isRead = isRead;
     }
 
     findBook = (searchParam, keyword) => {
@@ -78,42 +86,22 @@ myLibrary.clearLibrary()
 console.log(myLibrary.bookArray)
 
 
-const addToLibrary = function (title, author, pages, isRead) {
-    let newBook = new Book(title, author, pages, isRead);
-    newBook.id = crypto.randomUUID();
-    library.push(newBook);
-    return newBook;
-}
-
 // The .closest() method is used to reach the book card div
 const changeStatus = function (event) {
     const button = event.target;
     const bookCard = button.closest('.book');
     const bookId = bookCard.dataset.bookId;
-    for (const book of library) {
-        if (book.id == bookId) {
-            book.changeStatus();
-            showBooks();
-        }
-    }
-}
-
-const updateBook = function (bookId, title, author, pages, isRead) {
-    for (const book of library) {
-        if (book.id === bookId) {
-           book.title = title;
-           book.author = author;
-           book.pages = pages;
-           book.isRead = isRead;
-        }
-    }
+    const targetBook = library.findBook('id', bookId);
+    targetBook.changeStatus();
+    showBooks();
 }
 
 const removeFromLibrary = function (event) {
     confirmationModal.close();
     const button = event.target;
     const bookId = button.dataset.bookId;
-    library = library.filter(book => book.id !== bookId);
+    const targetBook = library.findBook('id', bookId);
+    library.removeBook(targetBook);
     showBooks()
 }
 
@@ -124,14 +112,11 @@ const handleFormModal = function (event) {
     const bookCard = button.closest('.book');
     const bookId = bookCard.dataset.bookId;
     addBookForm.setAttribute('data-book-id', bookId);
-    for (const book of library) {
-        if (book.id === bookId) {
-            titleInput.value = book.title;
-            authorInput.value = book.author;
-            pagesInput.value = book.pages;
-            isReadInput.checked = book.isRead;
-        }
-    }
+    const targetBook = library.findBook('id', bookId);
+    titleInput.value = targetBook.title;
+    authorInput.value = targetBook.author;
+    pagesInput.value = targetBook.pages;
+    isReadInput.checked = targetBook.isRead;
     addBookModal.showModal();
 }
 
@@ -157,10 +142,10 @@ const getBookData = function (event) {
     let pages = pagesInput.value;
     let isRead = isReadInput.checked ? true : false;
     if (bookId) {
-        updateBook(bookId, title, author, pages, isRead);
+        library.updateBook(bookId, title, author, pages, isRead);
     }
     else {
-        addToLibrary(title, author, pages, isRead);
+        library.addBook(title, author, pages, isRead);
     }
     addBookForm.reset(); // To clear the input fields
     addBookForm.setAttribute('data-book-id', ''); // To clear the id of the edited book
@@ -169,12 +154,12 @@ const getBookData = function (event) {
 
 const showBooks = function () {
     booksList.innerHTML = '';  // To avoid duplication of cards
-    if (library.length === 0) {
+    if (library.bookArray.length === 0) {
         instruction.classList.add('show');
     }
     else {
         instruction.classList.remove('show');
-        library.forEach((book) => {
+        library.bookArray.forEach((book) => {
             let titleValue = book.title;
             let authorValue = book.author;
             let pagesValue = book.pages;
@@ -238,7 +223,7 @@ const showBooks = function () {
 }
 
 
-let library = [];
+const library = new Library();
 
 //addToLibrary('No Longer Human', 'Osamu Dazai', '177', false);
 
