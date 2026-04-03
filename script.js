@@ -42,6 +42,30 @@ class Book {
 
 }
 
+class Library {
+    bookArray = [];
+
+    addBook = (title, author, pages, isRead) => {
+       if (this.bookArray.every(book => book.title !== title)) {
+          let newBook = new Book(title, author, pages, isRead);
+          newBook.id = crypto.randomUUID();
+          this.bookArray.push(newBook);
+          return newBook;
+       }
+    }
+
+    findBook = (searchParam, keyword) => {
+        return this.bookArray.find(book => book[searchParam] === keyword);
+    }
+}
+
+const myLibrary = new Library()
+console.log(myLibrary.bookArray)
+const myBook = myLibrary.addBook('A', 'B', 123, true)
+const myMyBook = myLibrary.addBook('AC', 'BC', 1234, false)
+console.log(myLibrary.bookArray)
+console.log(myLibrary.findBook('author', myBook.author))
+
 const addToLibrary = function (title, author, pages, isRead) {
     let newBook = new Book(title, author, pages, isRead);
     newBook.id = crypto.randomUUID();
