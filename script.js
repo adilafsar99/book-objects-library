@@ -62,6 +62,10 @@ class Library {
         this.bookArray = this.bookArray.filter(book => book.id !== unneededBook.id);
         return unneededBook;
     }
+
+    clearLibrary = () => {
+        this.bookArray.length = 0;
+    }
 }
 
 const myLibrary = new Library()
@@ -69,7 +73,8 @@ console.log(myLibrary.bookArray)
 const myBook = myLibrary.addBook('A', 'B', 123, true)
 const myMyBook = myLibrary.addBook('AC', 'BC', 1234, false)
 console.log(myLibrary.findBook('author', myMyBook.author))
-myLibrary.removeBook(myMyBook)
+//myLibrary.removeBook(myMyBook)
+myLibrary.clearLibrary()
 console.log(myLibrary.bookArray)
 
 
