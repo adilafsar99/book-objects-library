@@ -78,6 +78,12 @@ class Library {
 
 class UI {
     library = new Library();
+    
+    constructor() {
+        this.init();
+        this.bindEvents();
+        this.renderBooks(this.library.bookArray);
+    }
 
     init() {
         this.addBookButton = document.querySelector('#add-button');
@@ -174,9 +180,6 @@ class UI {
 }
 
 const ui = new UI();
-ui.init();
-ui.bindEvents();
-ui.renderBooks(ui.library.bookArray);
 
 // const myLibrary = new Library()
 // console.log(myLibrary.bookArray)
