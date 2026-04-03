@@ -80,13 +80,33 @@ class UI {
     library = new Library();
 
     init() {
+        this.addBookButton = document.querySelector('#add-button');
+        this.addBookModal = document.querySelector('#add-book-modal');
+        this.addBookForm = document.querySelector('#add-book-form');
+        this.closeModalButton = document.querySelector('#modal-button');
         this.bookList = document.querySelector('.book-list');
         this.instruction = document.querySelector('.instruction-div');
+        this.confirmationModal = document.querySelector('#confirm-choice-modal');
+        this.confirmButton = document.querySelector('#confirm-button');
+        this.cancelButton = document.querySelector('#cancel-button');
+        this.inputNodes = document.querySelectorAll('.form-input');
+        this.inputs = Array.from(this.inputNodes);
+        this.titleInput = this.inputs[0];
+        this.authorInput = this.inputs[1];
+        this.pagesInput = this.inputs[2];
+        this.isReadInput = this.inputs[3];
+    }
+
+    bindEvents() {
+        // this.addBookButton.addEventListener('click', () => addBookModal.showModal());
+        // this.addBookForm.addEventListener('submit', getBookData);
+        // this.confirmButton.addEventListener('click', removeFromLibrary)
+        // this.cancelButton.addEventListener('click', () => confirmationModal.close())
     }
 
     renderBooks = (books) => {
         this.bookList.innerHTML = '';  // To avoid duplication of cards
-        if (library.bookArray.length === 0) {
+        if (books.length === 0) {
             this.instruction.classList.add('show');
         }
         else {
@@ -155,6 +175,8 @@ class UI {
 
 const ui = new UI();
 ui.init();
+ui.bindEvents();
+ui.renderBooks(ui.library.bookArray);
 
 // const myLibrary = new Library()
 // console.log(myLibrary.bookArray)
@@ -327,5 +349,3 @@ addBookButton.addEventListener('click', () => addBookModal.showModal());
 addBookForm.addEventListener('submit', getBookData);
 confirmButton.addEventListener('click', removeFromLibrary)
 cancelButton.addEventListener('click', () => confirmationModal.close())
-
-ui.renderBooks(library);
