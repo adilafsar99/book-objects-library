@@ -57,6 +57,11 @@ class Library {
     findBook = (searchParam, keyword) => {
         return this.bookArray.find(book => book[searchParam] === keyword);
     }
+
+    removeBook = (unneededBook) => {
+        this.bookArray = this.bookArray.filter(book => book.id !== unneededBook.id);
+        return unneededBook;
+    }
 }
 
 const myLibrary = new Library()
@@ -64,6 +69,8 @@ console.log(myLibrary.bookArray)
 const myBook = myLibrary.addBook('A', 'B', 123, true)
 const myMyBook = myLibrary.addBook('AC', 'BC', 1234, false)
 console.log(myLibrary.findBook('author', myMyBook.author))
+myLibrary.removeBook(myMyBook)
+console.log(myLibrary.bookArray)
 
 
 const addToLibrary = function (title, author, pages, isRead) {
