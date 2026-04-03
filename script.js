@@ -76,14 +76,94 @@ class Library {
     }
 }
 
-const myLibrary = new Library()
-console.log(myLibrary.bookArray)
-const myBook = myLibrary.addBook('A', 'B', 123, true)
-const myMyBook = myLibrary.addBook('AC', 'BC', 1234, false)
-console.log(myLibrary.findBook('author', myMyBook.author))
-//myLibrary.removeBook(myMyBook)
-myLibrary.clearLibrary()
-console.log(myLibrary.bookArray)
+class UI {
+    library = new Library();
+
+    init() {
+        this.bookList = document.querySelector('.book-list');
+        this.instruction = document.querySelector('.instruction-div');
+    }
+
+    renderBooks = (books) => {
+        this.bookList.innerHTML = '';  // To avoid duplication of cards
+        if (library.bookArray.length === 0) {
+            this.instruction.classList.add('show');
+        }
+        else {
+            books.forEach(book => {
+                const title = document.createElement('p');
+                title.classList.add('title');
+                title.textContent = book.title;
+
+                const author = document.createElement('p');
+                author.classList.add('author');
+                author.textContent = book.author;
+
+                const pages = document.createElement('p');
+                pages.classList.add('pages');
+                pages.textContent = book.pages;
+
+                const status = document.createElement('p');
+                status.classList.add('status');
+                status.textContent = book.isRead ? 'Read' : 'Not read';
+
+                const infoSection = document.createElement('div');
+                infoSection.classList.add('info-section');
+                infoSection.appendChild(title);
+                infoSection.appendChild(author);
+                infoSection.appendChild(pages);
+                infoSection.appendChild(status);
+
+                const toggleIcon = document.createElement('span');
+                toggleIcon.classList.add('fa-regular', 'fa-circle-check');
+                const toggleButton = document.createElement('button');
+                toggleButton.classList.add('toggle-button');
+                toggleButton.appendChild(toggleIcon);
+                toggleButton.addEventListener('click', changeStatus);
+
+                const editIcon = document.createElement('span');
+                editIcon.classList.add('fa-regular', 'fa-pen-to-square');
+                const editButton = document.createElement('button');
+                editButton.classList.add('edit-button');
+                editButton.appendChild(editIcon);
+                editButton.addEventListener('click', handleFormModal);
+
+                const deleteIcon = document.createElement('span');
+                deleteIcon.classList.add('fa-regular', 'fa-trash-can');
+                const deleteButton = document.createElement('button');
+                deleteButton.classList.add('delete-button');
+                deleteButton.appendChild(deleteIcon);
+                deleteButton.addEventListener('click', handleConfirmationModal);
+
+                const buttonSection = document.createElement('div');
+                buttonSection.classList.add('button-section');
+                buttonSection.appendChild(toggleButton);
+                buttonSection.appendChild(editButton);
+                buttonSection.appendChild(deleteButton);
+
+                bookCard = document.createElement('div');
+                bookCard.classList.add('book');
+                bookCard.setAttribute('data-book-id', bookId);
+                bookCard.appendChild(infoSection);
+                bookCard.appendChild(buttonSection);
+
+                this.bookList.appendChild(book);
+            })
+        }
+    }
+}
+
+const ui = new UI();
+ui.init();
+
+// const myLibrary = new Library()
+// console.log(myLibrary.bookArray)
+// const myBook = myLibrary.addBook('A', 'B', 123, true)
+// const myMyBook = myLibrary.addBook('AC', 'BC', 1234, false)
+// console.log(myLibrary.findBook('author', myMyBook.author))
+// myLibrary.removeBook(myMyBook)
+// myLibrary.clearLibrary()
+// console.log(myLibrary.bookArray)
 
 
 // The .closest() method is used to reach the book card div
@@ -248,4 +328,4 @@ addBookForm.addEventListener('submit', getBookData);
 confirmButton.addEventListener('click', removeFromLibrary)
 cancelButton.addEventListener('click', () => confirmationModal.close())
 
-showBooks();
+ui.renderBooks(library);
