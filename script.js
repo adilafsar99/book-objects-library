@@ -63,8 +63,8 @@ const myLibrary = new Library()
 console.log(myLibrary.bookArray)
 const myBook = myLibrary.addBook('A', 'B', 123, true)
 const myMyBook = myLibrary.addBook('AC', 'BC', 1234, false)
-console.log(myLibrary.bookArray)
-console.log(myLibrary.findBook('author', myBook.author))
+console.log(myLibrary.findBook('author', myMyBook.author))
+
 
 const addToLibrary = function (title, author, pages, isRead) {
     let newBook = new Book(title, author, pages, isRead);
