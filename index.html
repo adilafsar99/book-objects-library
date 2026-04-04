@@ -20,6 +20,20 @@
 			</div>
 		</header>
 		<main class="main">
+			<div class="search-div">
+				<select class="search-div-element" id="search-param-select">
+					<option value="title">Title</option>
+					<option value="author">Author</option>
+				</select>
+				<input
+					id="search-value-input"
+					placeholder="Search library"
+					type="search"
+				/>
+				<button class="search-div-element" id="search-button">
+					<span class="fa-solid fa-search"></span>
+				</button>
+			</div>
 			<div class="book-list"></div>
 			<div class="instruction-div">
 				<p>Books added to the Library will appear here in the form of cards.</p>
