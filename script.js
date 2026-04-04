@@ -62,8 +62,8 @@ class Library {
         targetBook.isRead = isRead;
     }
 
-    findBook = (searchParam, keyword) => {
-        return this.bookArray.find(book => book[searchParam] === keyword);
+    findBook = (searchParam, paramValue) => {
+        return this.bookArray.find(book => book[searchParam] === paramValue);
     }
 
     removeBook = (unneededBook) => {
@@ -89,6 +89,9 @@ class UI {
 
     init() {
         this.addBookButton = document.querySelector('#add-button');
+        this.searchParamSelect = document.querySelector('#search-param-select');
+        this.searchValueInput = document.querySelector('#search-value-input');
+        this.searchButton = document.querySelector('#search-button');
         this.addBookModal = document.querySelector('#add-book-modal');
         this.addBookForm = document.querySelector('#add-book-form');
         this.closeModalButton = document.querySelector('#modal-button');
@@ -108,6 +111,8 @@ class UI {
     bindEvents() {
         this.addBookButton.addEventListener('click', () => this.addBookModal.showModal());
         this.addBookForm.addEventListener('submit', this.getBookData);
+        this.searchButton.addEventListener('click', this.searchLibrary);
+        this.searchValueInput.addEventListener('input', this.searchLibrary)
         this.confirmButton.addEventListener('click', this.removeFromLibrary)
         this.cancelButton.addEventListener('click', () => this.confirmationModal.close())
     }
@@ -199,6 +204,15 @@ class UI {
         this.addBookForm.reset(); // To clear the input fields
         this.addBookForm.setAttribute('data-book-id', ''); // To clear the id of the edited book
         this.renderBooks(this.library.bookArray);
+    }
+
+    searchLibrary = () => {
+        const searchParam = this.searchParamSelect.value;
+        const searchParamValue = this.searchValueInput.value;
+        const searchResult = this.library.bookArray.filter(book => book[searchParam].includes(searchParamValue));
+        if (searchResult.length) {
+            this.renderBooks(searchResult);
+        }
     }
 
     changeBookStatus = (event) => {
